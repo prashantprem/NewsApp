@@ -34,7 +34,12 @@ import java.util.*
 import android.location.Geocoder
 
 import android.location.LocationManager
+import android.opengl.Visibility
 import android.provider.Settings
+import android.view.View
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import java.io.IOException
 
 
@@ -56,6 +61,7 @@ class MainActivity : AppCompatActivity() {
     private var flag = 0
     private lateinit var locationManager: LocationManager
     private val locationPermissionCode = 2
+    lateinit var adView : AdView
 
 
     override fun onStart() {
@@ -73,10 +79,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mLocationRequest = LocationRequest()
-
         context = this@MainActivity
         articleViewModel = ViewModelProvider(this).get(ArticleViewModel::class.java)
-
         recyclerView = findViewById(R.id.recylcerView)
         adapter = NewsAdapter(this)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -85,8 +89,54 @@ class MainActivity : AppCompatActivity() {
 //        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 //            buildAlertMessageNoGps()
 //        }
+        RemoteConfiFirebase.RemoteConfigUtils.init()
+        adView = findViewById<View>(R.id.adView) as AdView
+        var temp =RemoteConfiFirebase.RemoteConfigUtils.getAdStatus()
+        if(temp)
+        {
+            adView.visibility = View.VISIBLE
+            val adRequest = AdRequest.Builder().build()
+            adView.loadAd(adRequest)
 
+            adView.adListener = object : AdListener(){
+                override fun onAdFailedToLoad(p0: Int) {
+                    super.onAdFailedToLoad(p0)
+                    val toastMessage: String = "ad fail to load" + p0
+                    Toast.makeText(applicationContext, toastMessage.toString(), Toast.LENGTH_LONG).show()
+                }
+                override fun onAdLoaded() {
+                    super.onAdLoaded()
+                    val toastMessage: String = "ad loaded"
+                    Toast.makeText(applicationContext, toastMessage.toString(), Toast.LENGTH_LONG).show()
+                }
+                override fun onAdOpened() {
+                    super.onAdOpened()
+                    val toastMessage: String = "ad is open"
+                    Toast.makeText(applicationContext, toastMessage.toString(), Toast.LENGTH_LONG).show()
+                }
+                override fun onAdClicked() {
+                    super.onAdClicked()
+                    val toastMessage: String = "ad is clicked"
+                    Toast.makeText(applicationContext, toastMessage.toString(), Toast.LENGTH_LONG).show()
+                }
 
+                override fun onAdClosed() {
+                    super.onAdClosed()
+                    val toastMessage: String = "ad is closed"
+                    Toast.makeText(applicationContext, toastMessage.toString(), Toast.LENGTH_LONG).show()
+                }
+                override fun onAdImpression() {
+                    super.onAdImpression()
+                    val toastMessage: String = "ad impression"
+                    Toast.makeText(applicationContext, toastMessage.toString(), Toast.LENGTH_LONG).show()
+                }
+                override fun onAdLeftApplication() {
+                    super.onAdLeftApplication()
+                    val toastMessage: String = "ad left application"
+                    Toast.makeText(applicationContext, toastMessage.toString(), Toast.LENGTH_LONG).show()
+                }
+            }
+        }
 
     }
 
@@ -277,6 +327,27 @@ class MainActivity : AppCompatActivity() {
         } else {
             true
         }
+    }
+
+    override fun onPause() {
+        if (adView!=null) {
+            adView.pause();
+        }
+        super.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (adView != null) {
+            adView.resume();
+        }
+    }
+
+    override fun onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
     }
 
 

@@ -8,6 +8,8 @@ It is a simple news listing app which fetchs Top headlines depending upon your c
 - WebView (For opening articles)
 - AdMob (For displaying Ads)
 - Firebase (For remote config)
+- ViewModel
+- LiveData
 
 ## App screenshots
 

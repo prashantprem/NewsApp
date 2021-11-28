@@ -94,6 +94,7 @@ class MainActivity : AppCompatActivity() {
         var temp =RemoteConfiFirebase.RemoteConfigUtils.getAdStatus()
         if(temp)
         {
+            Toast.makeText(applicationContext,"Advertisement Turend ON", Toast.LENGTH_LONG).show()
             adView.visibility = View.VISIBLE
             val adRequest = AdRequest.Builder().build()
             adView.loadAd(adRequest)
@@ -101,41 +102,14 @@ class MainActivity : AppCompatActivity() {
             adView.adListener = object : AdListener(){
                 override fun onAdFailedToLoad(p0: Int) {
                     super.onAdFailedToLoad(p0)
-                    val toastMessage: String = "ad fail to load" + p0
-                    Toast.makeText(applicationContext, toastMessage.toString(), Toast.LENGTH_LONG).show()
-                }
-                override fun onAdLoaded() {
-                    super.onAdLoaded()
-                    val toastMessage: String = "ad loaded"
-                    Toast.makeText(applicationContext, toastMessage.toString(), Toast.LENGTH_LONG).show()
-                }
-                override fun onAdOpened() {
-                    super.onAdOpened()
-                    val toastMessage: String = "ad is open"
-                    Toast.makeText(applicationContext, toastMessage.toString(), Toast.LENGTH_LONG).show()
-                }
-                override fun onAdClicked() {
-                    super.onAdClicked()
-                    val toastMessage: String = "ad is clicked"
-                    Toast.makeText(applicationContext, toastMessage.toString(), Toast.LENGTH_LONG).show()
-                }
-
-                override fun onAdClosed() {
-                    super.onAdClosed()
-                    val toastMessage: String = "ad is closed"
-                    Toast.makeText(applicationContext, toastMessage.toString(), Toast.LENGTH_LONG).show()
-                }
-                override fun onAdImpression() {
-                    super.onAdImpression()
-                    val toastMessage: String = "ad impression"
-                    Toast.makeText(applicationContext, toastMessage.toString(), Toast.LENGTH_LONG).show()
-                }
-                override fun onAdLeftApplication() {
-                    super.onAdLeftApplication()
-                    val toastMessage: String = "ad left application"
-                    Toast.makeText(applicationContext, toastMessage.toString(), Toast.LENGTH_LONG).show()
+                    val toastMessage: String = "Ad fail to load: " + p0
                 }
             }
+        }
+        else
+        {
+            Toast.makeText(applicationContext,"Advertisement Turend OFF", Toast.LENGTH_LONG).show()
+
         }
 
     }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="25dp"
+    android:gravity="center_horizontal"
+   >
+
+<!--    <TextView-->
+<!--        android:id="@+id/itemTitle"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="TITLE"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="15sp"-->
+<!--        tools:layout_editor_absoluteX="182dp"-->
+<!--        tools:layout_editor_absoluteY="200dp"-->
+<!--        tools:textStyle="bold" />-->
+<LinearLayout
+    android:padding="10dp"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#dedede">
+    <ImageView
+        android:id="@+id/itemImage"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        tools:layout_editor_absoluteX="-11dp"
+        tools:layout_editor_absoluteY="-9dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/itemDescription"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textColor="@color/black"
+
+        tools:layout_editor_absoluteX="189dp"
+        tools:layout_editor_absoluteY="141dp" />
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:id="@+id/itemPublishedAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Published At:"
+        android:textSize="13sp"
+        android:paddingLeft="2dp"
+        tools:layout_editor_absoluteX="176dp"
+        tools:layout_editor_absoluteY="210dp" />
+
+</LinearLayout>
+
+</LinearLayout>

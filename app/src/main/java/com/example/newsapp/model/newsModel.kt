@@ -28,9 +28,9 @@ data class newsModel (
 data class Article (
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name="id") val id : Int =0,
 
-    @ColumnInfo(name = "Source")
-    @SerializedName("Source")
-    val source: List<Source>?,
+    @ColumnInfo(name = "source")
+    @SerializedName("source")
+    val source: Source?,
 
     @ColumnInfo(name = "author")
     @SerializedName("author")
@@ -71,8 +71,8 @@ data class Source (
 class Converters {
 
     @TypeConverter
-    fun listToJsonString(value: List<Source>?): String = Gson().toJson(value)
+    fun listToJsonString(value: Source?): String = Gson().toJson(value)
 
     @TypeConverter
-    fun jsonStringToList(value: String) = Gson().fromJson(value, Array<Source>::class.java)?.toList()
+    fun jsonStringToList(value: String) = Gson().fromJson(value, Source::class.java)
 }

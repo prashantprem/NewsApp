@@ -46,6 +46,7 @@ class NewsAdapter(val context: Context): RecyclerView.Adapter<NewsViewHolder>()
         holder.itemView.setOnClickListener(View.OnClickListener { v ->
             var intent = Intent(context?.applicationContext, WebViewActivity::class.java)
             intent.putExtra("url",articles[position].url)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(context?.applicationContext,intent,null)
 
 

@@ -5,7 +5,7 @@ import androidx.room.*
 import com.example.newsapp.model.Article
 import com.example.newsapp.model.Converters
 
-@Database(entities = [Article::class], version = 2)
+@Database(entities = [Article::class], version = 5)
 @TypeConverters(Converters::class)
 abstract class RoomAppDb: RoomDatabase() {
 
@@ -19,6 +19,7 @@ abstract class RoomAppDb: RoomDatabase() {
                 INSTANCE = Room.databaseBuilder<RoomAppDb>(
                     context.applicationContext,RoomAppDb::class.java,"appDB").
                         allowMainThreadQueries()
+                        .fallbackToDestructiveMigration()
                         .build()
             }
             return INSTANCE

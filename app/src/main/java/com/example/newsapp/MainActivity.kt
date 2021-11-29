@@ -36,6 +36,7 @@ import android.location.Geocoder
 import android.location.LocationManager
 import android.opengl.Visibility
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         if (checkPermissionForLocation(this)){
             startLocationUpdates()
         }
-
+        flag=0
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -139,13 +140,13 @@ class MainActivity : AppCompatActivity() {
     {
 
         val request = ServiceBuilder.buildService(Api::class.java)
-        val call = request.getTopHeadlines(countryName,"14b4bdd536864da79b8e6745902e14db")
+        val call = request.getTopHeadlines(country,"14b4bdd536864da79b8e6745902e14db")
 
         call.enqueue(object :Callback<newsModel>
         {
 
             override fun onResponse(call: Call<newsModel>?, response: Response<newsModel>?) {
-//                Log.d(TAG, response?.body().toString())
+                Log.d(TAG, response?.body().toString())
                 if(response?.body() != null)
                 {
                     var newsList:newsModel = response.body()!!
@@ -161,6 +162,9 @@ class MainActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<newsModel>?, t: Throwable?) {
 
+                if (t != null) {
+                    t.printStackTrace()
+                }
                 articleViewModel.getArticleDetails(context)?.observe(this@MainActivity, Observer {
 
                     if(it != null) {
@@ -228,8 +232,21 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             if (country_name != null) {
-                getDataFromAPI(country_name.take(2))
+                if(flag==0)
+                {
+                    Locale.getISOCountries().find {Locale("",it).displayCountry == country_name }
+                        ?.let { getDataFromAPI(it) }
+                    Toast.makeText(applicationContext,"Current Country: "+ country_name, Toast.LENGTH_LONG).show()
+
+//                    getDataFromAPI(country_name.take(2))
+//                    getDataFromAPI("in")
+                    flag=1
+                }
+
 //                countryName = country_name
+            }
+            else{
+                getDataFromAPI("in")
             }
 //            onLocationChanged(locationResult.lastLocation)
         }
